@@ -31,6 +31,15 @@ router.post('/', (req, res, next) => {
 		.catch(next);
 });
 
+router.get('/:id', (req, res, next) => {
+	const { id } = req.params;
+	Resort.findById(id)
+		.then(resort => {
+			res.status(200).json(resort);
+		})
+		.catch(next);
+});
+
 // POST /resorts/:id
 router.delete('/:id', (req, res, next) => {
 	const { id } = req.params;
@@ -52,8 +61,10 @@ router.put('/:id', (req, res, next) => {
 		longitude,
 	})
 		.then(resortUpdated => {
+			console.log(resortUpdated);
 			if (resortUpdated) {
-				res.json(resortUpdated);
+				// res.json(resortUpdated);
+				res.status(200).json(resortUpdated);
 			} else {
 				res.status(404).json('not found');
 			}
